@@ -3,7 +3,7 @@
 #include <string>
 using namespace std;
 
-struct Patient {
+struct patient {
     int patient_id;
     string name;
     int age;
@@ -11,53 +11,53 @@ struct Patient {
     int room_number;
 };
 
-void clearInputBuffer() {
+void clr_input() {
     cin.ignore(numeric_limits<streamsize>::max(), '\n');
 }
 
-bool isValidID(int id) {
+bool id(int id) {
     return id > 0;
 }
 
-bool isValidAge(int age) {
+bool age(int age) {
     return age >= 0 && age <= 150;
 }
 
-bool isValidRoomNumber(int room) {
+bool room_no(int room) {
     return room > 0;
 }
 
-void addNewPatient() {
-    Patient patient;
+void add_patient() {
+    patient pat;
     cout << "Enter Patient ID (positive integer): ";
-    cin >> patient.patient_id;
-    if (!isValidID(patient.patient_id)) {
+    cin >> pat.patient_id;
+    if (!id(pat.patient_id)) {
         cout << "Invalid Patient ID! It must be a positive integer.\n";
-        clearInputBuffer();
+        clr_input();
         return;
     }
 
     cin.ignore();
     cout << "Enter Patient Name: ";
-    getline(cin, patient.name);
+    getline(cin, pat.name);
 
     cout << "Enter Patient Age (0-150): ";
-    cin >> patient.age;
-    if (!isValidAge(patient.age)) {
+    cin >> pat.age;
+    if (!age(pat.age)) {
         cout << "Invalid Age! Please enter an age between 0 and 150.\n";
-        clearInputBuffer();
+        clr_input();
         return;
     }
 
     cin.ignore();
     cout << "Enter Disease: ";
-    getline(cin, patient.disease);
+    getline(cin, pat.disease);
 
     cout << "Enter Room Number (positive integer): ";
-    cin >> patient.room_number;
-    if (!isValidRoomNumber(patient.room_number)) {
+    cin >> pat.room_number;
+    if (!room_no(pat.room_number)) {
         cout << "Invalid Room Number! It must be a positive integer.\n";
-        clearInputBuffer();
+        clr_input();
         return;
     }
 
@@ -66,22 +66,22 @@ void addNewPatient() {
     while (getline(file, line)) {
         size_t pos = line.find(',');
         int id = stoi(line.substr(0, pos));
-        if (id == patient.patient_id) {
+        if (id == pat.patient_id) {
             cout << "Error: Patient ID already exists!" << endl;
             file.close();
-            clearInputBuffer();
+            clr_input();
             return;
         }
     }
     file.close();
 
     ofstream outfile("patients.txt", ios::app);
-    outfile << patient.patient_id << "," << patient.name << "," << patient.age << "," << patient.disease << "," << patient.room_number << endl;
+    outfile << pat.patient_id << "," << pat.name << "," << pat.age << "," << pat.disease << "," << pat.room_number << endl;
     outfile.close();
     cout << "Patient added successfully!" << endl;
 }
 
-void displayPatients() {
+void display_patients() {
     ifstream file("patients.txt");
     if (!file) {
         cout << "Error: Could not open file." << endl;
@@ -122,7 +122,7 @@ void displayPatients() {
     file.close();
 }
 
-void searchPatientByID(int id) {
+void search_patient_by_id(int id) {
     ifstream file("patients.txt");
     if (!file) {
         cout << "Error: Could not open file." << endl;
@@ -148,7 +148,7 @@ void searchPatientByID(int id) {
     file.close();
 }
 
-void deletePatientByID(int id) {
+void delete_patient_by_id(int id) {
     ifstream file("patients.txt");
     if (!file) {
         cout << "Error: Could not open file." << endl;
@@ -157,19 +157,19 @@ void deletePatientByID(int id) {
 
     string line;
     bool found = false;
-    ofstream tempFile("temp.txt");
+    ofstream temp_file("temp.txt");
     while (getline(file, line)) {
         size_t pos = line.find(',');
         int patient_id = stoi(line.substr(0, pos));
         if (patient_id != id) {
-            tempFile << line << endl;
+            temp_file << line << endl;
         } else {
             found = true;
         }
     }
 
     file.close();
-    tempFile.close();
+    temp_file.close();
 
     if (found) {
         remove("patients.txt");
@@ -180,7 +180,7 @@ void deletePatientByID(int id) {
     }
 }
 
-void updatePatientDetails(int id) {
+void update_patient_details(int id) {
     ifstream file("patients.txt");
     if (!file) {
         cout << "Error: Could not open file." << endl;
@@ -189,7 +189,7 @@ void updatePatientDetails(int id) {
 
     string line;
     bool found = false;
-    ofstream tempFile("temp.txt");
+    ofstream temp_file("temp.txt");
 
     while (getline(file, line)) {
         size_t pos = line.find(',');
@@ -197,32 +197,32 @@ void updatePatientDetails(int id) {
         if (patient_id == id) {
             found = true;
 
-            Patient updatedPatient;
+            patient updated_pat;
             cout << "Patient found. Updating details...\n";
-            updatedPatient.patient_id = id;
+            updated_pat.patient_id = id;
 
             cin.ignore();
             cout << "Enter new Name: ";
-            getline(cin, updatedPatient.name);
+            getline(cin, updated_pat.name);
 
             cout << "Enter new Age: ";
-            cin >> updatedPatient.age;
+            cin >> updated_pat.age;
             cin.ignore();
 
             cout << "Enter new Disease: ";
-            getline(cin, updatedPatient.disease);
+            getline(cin, updated_pat.disease);
 
             cout << "Enter new Room Number: ";
-            cin >> updatedPatient.room_number;
+            cin >> updated_pat.room_number;
 
-            tempFile << updatedPatient.patient_id << "," << updatedPatient.name << "," << updatedPatient.age << "," << updatedPatient.disease << "," << updatedPatient.room_number << endl;
+            temp_file << updated_pat.patient_id << "," << updated_pat.name << "," << updated_pat.age << "," << updated_pat.disease << "," << updated_pat.room_number << endl;
         } else {
-            tempFile << line << endl;
+            temp_file << line << endl;
         }
     }
 
     file.close();
-    tempFile.close();
+    temp_file.close();
 
     if (found) {
         remove("patients.txt");
@@ -233,7 +233,7 @@ void updatePatientDetails(int id) {
     }
 }
 
-void preloadPatients() {
+void preload_patients() {
     ofstream file("patients.txt");
     if (!file) {
         cout << "Error: Could not open file." << endl;
@@ -251,7 +251,7 @@ void preloadPatients() {
 }
 
 int main() {
-    preloadPatients();
+    preload_patients();
     int choice;
     do {
         cout << "\nHospital Patient Management System";
@@ -263,34 +263,34 @@ int main() {
         cout << "\n6. Exit";
         cout << "\nEnter your choice: ";
         cin >> choice;
-        clearInputBuffer();
+        clr_input();
 
         switch (choice) {
             case 1:
-                addNewPatient();
+                add_patient();
                 break;
             case 2:
-                displayPatients();
+                display_patients();
                 break;
             case 3: {
                 int id;
                 cout << "Enter Patient ID: ";
                 cin >> id;
-                searchPatientByID(id);
+                search_patient_by_id(id);
                 break;
             }
             case 4: {
                 int id;
                 cout << "Enter Patient ID to delete: ";
                 cin >> id;
-                deletePatientByID(id);
+                delete_patient_by_id(id);
                 break;
             }
             case 5: {
                 int id;
                 cout << "Enter Patient ID to update: ";
                 cin >> id;
-                updatePatientDetails(id);
+                update_patient_details(id);
                 break;
             }
             case 6:
