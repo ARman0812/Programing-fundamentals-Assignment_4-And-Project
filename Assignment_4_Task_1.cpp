@@ -177,23 +177,26 @@ void searchBookByID(int id) {
     file.close();
     cout << "Library preloaded with sample books!" << endl;
 }
+void displaymenu (){
+	    cout << "\nLibrary Management System";
+
+        cout << "\n1. Add New Book";
+
+        cout << "\n2. Display All Books";
+
+        cout << "\n3. Search Book by ID";
+
+        cout << "\n4. Search Book by Title";
+
+        cout << "\n5. Exit";
+        
+}
 
 int main() {
     preloadBooks();
     int choice;
     do {
-        cout << "\nLibrary Management System";
-      
-        cout << "\n1. Add New Book";
-      
-        cout << "\n2. Display All Books";
-      
-        cout << "\n3. Search Book by ID";
-      
-        cout << "\n4. Search Book by Title";
-      
-        cout << "\n5. Exit";
-      
+        displaymenu ();
         cout << "\nEnter your choice: ";
      
         cin >> choice;
