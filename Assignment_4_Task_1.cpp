@@ -4,15 +4,15 @@
 using namespace std;
 
 struct Library {
- 
+
            int book_id;
     string title;
-  
+
         string author;
-   
+
     int quantity;
-    
-    
+
+
 };
 
 void addNewBook() {
@@ -25,7 +25,7 @@ void addNewBook() {
     cout << "Enter Book Title: ";
     getline(cin, book.title);
     cout << "Enter Author: ";
-
+    cin >> book.author;
 
 
 
@@ -36,29 +36,29 @@ void addNewBook() {
     ifstream file("library.txt");
     string line;
     while (getline(file, line)) {
- 
-    
+
+int pos;
         int id = stoi(line.substr(0, pos));
         if (id == book.book_id) {
-   
+
             cout << "Error: Book ID already exists!" << endl;
             file.close();
             return;
-            
-            
+
+
         }
-        
-        
+
+
     }
     file.close();
 
 
     ofstream outfile("library.txt", ios::app);
-   
+
     outfile << book.book_id << "," << book.title << "," << book.author << "," << book.quantity << endl;
     outfile.close();
-   
-   
+
+
     cout << "Book added successfully!" << endl;
 }
 
@@ -66,7 +66,7 @@ void displayBooks() {
     ifstream file("library.txt");
     if 
     (!file) {
-      
+
         cout << "Error: Could not open file." << endl;
         return;
     }
@@ -103,11 +103,11 @@ void displayBooks() {
 }
 
 void searchBookByID(int id) {
-       
+
           ifstream file("library.txt");
     if (!file) 
     {
-   
+
                cout << "Error: Could not open file." << endl;
         return;
     }
@@ -144,12 +144,12 @@ void searchBookByID(int id) {
                if (line.find(keyword) != string::npos) {
             cout << "Book Found: " << line << endl;
             found = true;
-      
+
         }
-        
+
     }
 
-   
+
     if (!found) {
         cout << "Book not found." << endl;
     }
@@ -165,12 +165,12 @@ void searchBookByID(int id) {
                 }
 
 
-   
+
     file << "101,The Great Gatsby,F. Scott Fitzgerald,5\n";
- 
+
     file << "102,1984,George Orwell,8\n";
     file << "103,To Kill a Mockingbird,Harper Lee,10\n";
-  
+
     file << "104,The Catcher in the Rye,J.D. Salinger,7\n";
     file << "105,Pride and Prejudice,Jane Austen,4\n";
 
@@ -178,7 +178,7 @@ void searchBookByID(int id) {
     cout << "Library preloaded with sample books!" << endl;
 }
 void displaymenu (){
-	    cout << "\nLibrary Management System";
+            cout << "\nLibrary Management System";
 
         cout << "\n1. Add New Book";
 
@@ -189,7 +189,7 @@ void displaymenu (){
         cout << "\n4. Search Book by Title";
 
         cout << "\n5. Exit";
-        
+
 }
 
 int main() {
@@ -198,7 +198,7 @@ int main() {
     do {
         displaymenu ();
         cout << "\nEnter your choice: ";
-     
+
         cin >> choice;
         cin.ignore();
 
@@ -218,27 +218,27 @@ int main() {
             }
             case 4: {
                 string keyword;
-          
-          
+
+
                 cout << "Enter Title or Keyword: ";
                 cin.ignore();
                 getline(cin, keyword);
-          
+
                 searchBooksByTitle(keyword);
                 break;
             }
             case 5:
-             
+
                 cout << "Exiting the program.\n";
                 break;
             default:
-             
+
                 cout << "Invalid choice, please try again.\n";
             }
-   
+
                  }
-    
-    
+
+
     while (choice != 5);
 
     return 0;
